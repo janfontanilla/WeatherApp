@@ -13,6 +13,12 @@
         <input type = "text" placeholder="enter city name: " spellcheck="false">
         <button><img src = "images/search.png"> </button>
     </div>
+
+    <div class ="error">
+        <p>Invalid City Name</p>
+    </div>
+
+    
     <div class="Weather">
         <img src = "images/rain.png" class = "weather-icon">
         <h1 class = "temp">22°C</h1>
@@ -46,9 +52,14 @@
 
 async function checkWeather(city){
     const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
-    var data = await response.json();
-
-    console.log(data);
+    if(response.status == 404){
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".Weather").style.display = "none";
+    }
+    else
+    {
+        var data = await response.json();
+         console.log(data);
 
     document.querySelector(".city").innerHTML = data.name;
     document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
@@ -57,21 +68,24 @@ async function checkWeather(city){
 
     const weatherIcon = document.querySelector(".weather-icon");
 
-const weatherImages = {
-    "Clouds": "clouds.png",
+    const weatherImages = {
     "Clear": "clear.png",
-    "Rain": "rain.png",
+    "Clouds": "clouds.png",
     "Drizzle": "drizzle.png",
+    "Mist": "mist.png",
+    "Rain": "rain.png",
     "Snow": "snow.png",
     "Thunderstorm": "thunderstorm.png",
-    "Mist": "mist.png",
-    "Haze": "haze.png",
-    "Fog": "fog.png"
+    "Wind": "wind.png",
+    "Humidity": "humidity.png"
+    }
+
+    document.querySelector(".Weather").style.display = "block";
+    document.querySelector(".error").style.display = "none";
 };
 
-
 weatherIcon.src = `images/${weatherImages[data.weather[0].main] || "default.png"}`;
-
+document.querySelector(".Weather").style.display = "block"
 }
 
 searchBtn.addEventListener("click", ()=> {
