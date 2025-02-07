@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name = "viewport" content = "width=device-width, intial-scale=1.0">
-        <title>Weather App - Easy Tutorials</title>
+        <title>Weather App</title>
         <link rel = "stylesheet" href="styles.css">
     </head>
 
@@ -35,6 +35,18 @@
         </div>
     </div>
 </div>
+<script>
 
+    const apiKey = "0bcbfe2c5886029a0446ef53333b4b3a";
+    const apiUrl = "https://pro.openweathermap.org/data/2.5/forecast/climate?units=metric&q=toronto";
+
+async function checkWeather(){
+    const response = await fetch(apiUrl + `&appid=${apiKey}`);
+    var data = await response.json();
+
+    console.log(data);
+}
+checkWeather()
+</script>
 </body>
 </html>
